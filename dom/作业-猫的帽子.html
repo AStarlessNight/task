@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img#cat{
+            width: 30px;
+            height: 30px;
+            /* margin-left: 300px;
+            margin-top: 100px; */
+            position: absolute;
+        }
+        img#hat {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <img id = "cat" src="https://static.scientificamerican.com/sciam/cache/file/32665E6F-8D90-4567-9769D59E11DB7F26_source.jpg?w=590&h=800&7E4B4CAD-CAE1-4726-93D6A160C2B068B2" alt="">
+        <img id = "hat" src="https://img2.baidu.com/it/u=3852781344,905623284&fm=26&fmt=auto&gp=0.jpg" alt="">
+    </p>
+    <script>
+        var cat = document.querySelector("img")
+        var angle = 0, lastTime = null
+        let offsetX = parseFloat(cat.width) / 2 - parseFloat(hat.width) / 2
+        let offsetY = parseFloat(cat.height) / 2 - parseFloat(cat.height) / 2
+        function animate(time) {
+            if (lastTime != null) {
+                angle += (time - lastTime) * 0.001
+            }
+            lastTime = time
+            cat.style.top = (Math.sin(angle) * 70 + 150) + "px"
+            cat.style.left = (Math.cos(angle) * 120 + 300) + "px"
+            hat.style.top = offsetY + parseFloat(cat.style.top) + (Math.sin(799 * angle) * 50) + "px"
+            hat.style.left = offsetX + parseFloat(cat.style.left) + (Math.cos(799 * angle) * 50) + "px"
+            requestAnimationFrame(animate)
+        }
+        requestAnimationFrame(animate)
+    </script>
+</body>
+</html>

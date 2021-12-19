@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            display:block;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <span class="trailEle"></span><span class="trailEle"></span><span class="trailEle"></span>
+    <script>
+        let curPos = [100, 100]
+        let lastTime = null, angle = 0
+        document.addEventListener("mousemove", (event) => {
+            console.log(event.pageX, event.pageY)
+            curPos = [event.pageX, event.pageY]
+        })
+        requestAnimationFrame(function animate(time){
+            let trailEle = document.querySelectorAll(".trailEle")
+            let num = trailEle.length
+            let offset = 2 * Math.PI / num
+            if (lastTime !== null) {
+                angle += (time - lastTime) * 0.003
+            }
+            lastTime = time
+            trailEle.forEach((it, idx) => {
+                it.style.left = curPos[0] - 25 + (Math.sin( angle + offset * idx) * 100) + "px"
+                it.style.top = curPos[1] - 25 + (Math.cos(angle + offset * idx) * 100) + "px"
+            })
+            requestAnimationFrame(animate)
+        })
+    </script>
+</body>
+</html>

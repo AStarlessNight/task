@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [data-tabname] {
+            width: 250px;
+            height: 100px;
+            display: none;
+        }
+        [data-tabname="aaa"] {
+            background-color: yellow;
+        }
+        [data-tabname="bbb"] {
+            background-color: red;
+        }
+        [data-tabname="ccc"] {
+            background-color: blue;
+        }
+
+        button {
+            width: 50px;
+            height: 20px;
+            background-color: grey;
+        }
+
+        .active {
+            background-color: orange;
+        }
+        .selected {
+            display: block
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div data-tabname="aaa">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt dolorum </div>
+        <div data-tabname="bbb">Repellat neque voluptatibus odio amet molestiae. Ea sunt quas, neque </div>
+        <div data-tabname="ccc">Consectetur porro voluptatibus officiis natus illo nihil totam aliquam rem </div>
+    </section>
+    <script>
+        function asTabs(node) {
+            let tabElements = node.querySelectorAll("[data-tabname]")
+            tabElements[0].classList.add("selected")
+            let butWrapper = document.createElement("div")
+            butWrapper.className = "butwrapper"
+            node.prepend(butWrapper)
+            butWrapper.innerHTML = "<button></button>".repeat(tabElements.length)
+            let butList = Array.from(butWrapper.children)
+            butList[0].classList.add("active")
+            butList.forEach((it, idx) => {
+                it.textContent = tabElements[idx].dataset.tabname
+                it.addEventListener("click", (event) => {
+                    document.querySelector(".active").classList.remove("active")
+                    document.querySelector(".selected").classList.remove("selected")
+                    console.log(tabElements[idx])
+                    tabElements[idx].classList.add("selected")
+                    it.classList.add("active")
+                })
+            })
+        }
+        asTabs(document.querySelector("section"))
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 可以使用e.detail代替count -->
+    <script>
+        let lastTime = null
+        let count = 0
+        let tripleFun = () => {
+            alert("triple click!")
+        }
+        document.addEventListener("click", function detectTripleClick() {
+            let curTime = Date.now()
+            if (lastTime === null) {
+                lastTime = curTime
+                count++
+            } else if (curTime - lastTime < 300) {
+                lastTime = curTime
+                count++
+            } else {
+                lastTime = curTime
+                count = 1
+                return
+            }
+            if (count === 3) {
+                lastTime = null
+                count = 0
+                tripleFun()
+            }
+        })
+    </script>
+</body>
+</html>

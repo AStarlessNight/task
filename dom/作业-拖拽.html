@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+
+        #d1 {
+            background-color: red;
+        }
+
+        #d2 {
+            background-color: yellow;
+        }
+
+        #d3 {
+            background-color: blue;
+        }
+/* 可以采用user-select: none来解决mouseup捕获不到的问题
+    也可以采用在mousemove时解绑鼠标移动事件的方式，而不是在mouseup时解绑 */
+        /* html {
+            user-select: none;
+        } */
+    </style>
+</head>
+
+<body>
+    <div id="d1" style="top: 60px; left: 30px;"></div>
+    <div id="d2" style="top: 170px; left: 70px;"></div>
+    <div id="d3" style="top: 70px; left: 200px;"></div>
+    <script>
+        let prior = 0
+        let dragFun = null
+        document.addEventListener("mousedown", function startDragging(event) {
+            let obj = event.target
+            let startPos = [event.pageX, event.pageY]
+            if (obj.matches("div")) {
+                obj.style.zIndex = (++prior)
+                document.addEventListener("mousemove", dragFun = function dragging(event) {
+                    if (!event.which) {
+                        document.removeEventListener("mousemove", dragging)
+                    }
+                    // console.log(event.which)
+                    let endPos = [event.pageX, event.pageY]
+                    let objPos = [obj.style.left, obj.style.top]
+                    obj.style.left = endPos[0] - startPos[0] + parseFloat(objPos[0]) + "px"
+                    obj.style.top = endPos[1] - startPos[1] + parseFloat(objPos[1]) + "px"
+                    startPos = endPos
+                })
+            }
+        })
+        // document.addEventListener("mouseup", function endDragging(event) {
+        //     document.removeEventListener("mousemove", dragFun)
+        // })
+    </script>
+</body>
+
+</html>
